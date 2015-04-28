@@ -1,0 +1,139 @@
+#!/usr/bin/env node
+'use strict';
+
+process.bin = process.title = 'scv';
+
+// 获取目录
+var fs = require('fs');
+var path = require('path');
+var scvPath = path.dirname(fs.realpathSync(__filename)) + "/";
+var workPath = process.cwd();
+
+/**命令行子命令设置***************/
+var program = require('commander');
+program
+  .version('1.0.0');
+
+// 工程初始化
+program.command('init [template]')
+  // .alias('i')
+  .description('根据模板初始化工程,请在空目录下执行该命令,工程默认模板为default')
+  // .option('-f, --force','强制初始化，如果目录不为空将清空')
+  .action(init);
+
+program.command('server')
+  .description('工程监控服务')
+  .option('-i,--info','显示当前服务状态')
+  .option('-s,--start','启动服务')
+  .option('-S,--stop','停止服务')
+  .option('-r,--restart','重启服务')
+  .action(server);
+
+program.command('release')
+  .description('发布工程')
+  .action(release);
+program.command('template')
+  .description('将当前工程保存为模板')
+  .option('-l --list','显示当前模板列表')
+  .option('-s --save [name]','显示当前模板列表')
+  .action(template);
+  
+program.parse(process.argv);
+
+// 空参数输出帮助
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
+/**命令参数处理部分********************************/
+
+// 初始化工程
+function init(template){
+  if (checkSCV(workPath)) {
+    console.log('[scv] 工程目录不为空，无法初始化。');
+    return;
+  }
+  // 将node_modules 目录连接到工程目录
+  var fs = require('fs');
+  var path = require('path');
+
+  var shell = require('shelljs');
+  shell.ln('-s',scvPath+'../node_modules/',workPath+'/node_modules');
+
+  // copy gulp文件
+  shell.ln('-s',scvPath+'../lib/gulpfile.js',workPath+'/gulpfile.js');
+
+  var scvtemp = require('../lib/scv-template');
+  console.log('[scv] 工程初始化...');
+  scvtemp.copy(template,workPath);
+}
+function server(){
+  if (!checkSCV(workPath)) {
+    console.log('[scv] 不是有效的scv工程目录。'+workPath);
+    return;
+  }
+
+  var args = Array.prototype.slice.bind(arguments)();
+  // console.log(args);
+  var options= args.pop();
+
+  var scvgulp = require('../lib/scv-gulp');
+  // 当前启动状态
+  if (options.info) {
+    scvgulp.info(workPath);
+    return;
+  }
+  // 启动
+  if (options.start) {
+    scvgulp.start(workPath,scvPath);
+    return;
+  }
+
+  if (options.restart) {
+    scvgulp.reStart(workPath,scvPath);
+    return;
+  }
+
+  if (options.stop) {
+    scvgulp.stop(workPath,scvPath);
+    return;
+  }
+}
+
+// 保存模板
+function template(){
+  var args = Array.prototype.slice.bind(arguments)();
+  // console.log(args);
+  var options= args.pop();
+  // 列表
+  if (options.list) {
+    var scvtemp = require('../lib/scv-template');
+    scvtemp.list(template);
+    return;
+  }
+  // 保存
+  if (options.save) {
+    var workPath = process.cwd();
+    var tempName = options.save;
+    if (!checkSCV(workPath)) {
+      console.log('[scv] 当前目录不是有效地scv工程目录');
+      return;
+    }
+    var scvtemp = require('../lib/scv-template');
+    scvtemp.save(tempName,workPath);
+  }
+}
+// 发布版本
+function release(){
+	console.log('release');
+}
+
+// 判断是否工程目录,或者工程目录是否为空
+function checkSCV(workPath){
+  var fs = require('fs');
+  // 检查当目录是否为空
+  var exits = fs.existsSync(workPath+'/gulpfile.js') && fs.existsSync(workPath+'/node_modules');
+  if (exits) {
+    return true;
+  }
+  return false;
+}
