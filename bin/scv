@@ -31,6 +31,7 @@ program.command('server')
 
 program.command('release')
   .description('发布工程')
+  .option('-l --list','显示已经发布的版本列表')
   .action(release);
 program.command('template')
   .description('将当前工程保存为模板')
@@ -124,7 +125,23 @@ function template(){
 }
 // 发布版本
 function release(){
-	console.log('release');
+  var args = Array.prototype.slice.bind(arguments)();
+  // console.log(args);
+  var options= args.pop();
+  // 列表
+  if (options.list) {
+    console.log('release list is building...waiting');
+    return;
+  }
+  var fs = require('fs'),
+      config = require(workPath+'/config.js'),
+      name = config.name,
+      version = config.version,
+      release = config.release,
+      domains = config.assetsDomain;
+  // 
+  console.log('release version is building...waiting');
+  // console.log(config);
 }
 
 // 判断是否工程目录,或者工程目录是否为空

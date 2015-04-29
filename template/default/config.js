@@ -12,7 +12,7 @@
  * @release  发布目录的相对路径，这里相对的是scv根目录
  * @assetsDomain 资源文件发布时的前置域名，比如要发布到cdn：http://cdn.xxx.com/img/,默认空表示相对路径
  */
-var Config = {
+module.exports = {
 		name:'示例工程',
 		ename:'scv-demo',
 		description:'scv工程流模板工程',
@@ -22,7 +22,6 @@ var Config = {
 		main:'html/index.html',
 		port:8001,
 		//发布参数
-		release:'release',
 		assetsDomain:{
 				'js':'',	// http://cdn.xxx.com/js/
 				'css':'',	//http://css.xxx.com/xx/
