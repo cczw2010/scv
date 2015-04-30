@@ -28,13 +28,13 @@
 	scv init 		#初始化工程（按照约定规范生成目录，并启动工程监控）
 	#scv init test	#或者按照模板初始化新工程
 
-	#停止gulp服务
+	#停止gulp服务,服务启动后将占用控制台窗口以输出gulp工作流信息，用户可以在这里查看每次文件修改后scv的操作日志和代码错误以维护代码。用户可以通过`ctrl+c`中断服务
 	scv server -s
 	
 	#停止gulp服务
 	scv server -S
 	
-	#重启gulp服务
+	#重启gulp服务,如果启动服务出现问题，可以使用该命令重启服务。
 	scv server -r
 
 	#查看gulp服务状态
@@ -43,8 +43,8 @@
 	#测试工程，直接运行
 	scv test
 	
-	#生成模板，将当前工程保存为模板，初始化新工程时可以使用该模板初始化
-	scv template test
+	#生成模板，将当前工程保存为模板(mytmp)，初始化新工程时可以使用该模板初始化
+	scv template mytmp
 	
 	#查看模板列表
 	scv template -l

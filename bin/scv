@@ -46,7 +46,16 @@ if (!process.argv.slice(2).length) {
   program.outputHelp();
 }
 /**命令参数处理部分********************************/
-
+process.on('message', function(m) {
+  console.log('process got message:', m);
+});
+// 收到退出命令时，退出并停止子服务
+process.on('SIGINT', function (){
+  //停止gulp子进程
+  var scvgulp = require('../lib/scv-gulp');
+  scvgulp.stop(workPath,scvPath);
+  process.kill();
+});
 // 初始化工程
 function init(template){
   if (checkSCV(workPath)) {
