@@ -6,9 +6,9 @@ process.bin = process.title = 'scv';
 // 获取目录
 var fs = require('fs');
 var path = require('path');
-var scvPath = path.dirname(fs.realpathSync(__filename)) + "/";
+var scvutil = require('../lib/scv-util.js');
+var scvPath = path.dirname(fs.realpathSync(__filename)) + "/../";
 var workPath = process.cwd();
-
 /**命令行子命令设置***************/
 var program = require('commander');
 program
@@ -36,7 +36,8 @@ program.command('release')
 program.command('template')
   .description('将当前工程保存为模板')
   .option('-l --list','显示当前模板列表')
-  .option('-s --save [name]','显示当前模板列表')
+  .option('-d --delete <name>','删除模板')
+  .option('-s --save <name>','将当前开发目录保存为模板')
   .action(template);
   
 program.parse(process.argv);
@@ -53,31 +54,31 @@ process.on('message', function(m) {
 process.on('SIGINT', function (){
   //停止gulp子进程
   var scvgulp = require('../lib/scv-gulp');
-  scvgulp.stop(workPath,scvPath);
+  scvgulp.stop();
   process.kill();
 });
 // 初始化工程
-function init(template){
-  if (checkSCV(workPath)) {
+function init(tempName){
+  if (scvutil.checkSCV(workPath)) {
     console.log('[scv] 工程目录不为空，无法初始化。');
     return;
   }
-  // 将node_modules 目录连接到工程目录
   var fs = require('fs');
   var path = require('path');
 
   var shell = require('shelljs');
-  shell.ln('-s',scvPath+'../node_modules/',workPath+'/node_modules');
+  // 链接node_modules目录
+  shell.ln('-s',scvPath+'node_modules/',workPath+'/node_modules');
 
-  // copy gulp文件
-  shell.ln('-s',scvPath+'../lib/gulpfile.js',workPath+'/gulpfile.js');
+  // 链接 gulp文件
+  shell.ln('-s',scvPath+'lib/gulpfile.js',workPath+'/gulpfile.js');
 
   var scvtemp = require('../lib/scv-template');
   console.log('[scv] 工程初始化...');
-  scvtemp.copy(template,workPath);
+  scvtemp.copy(tempName,workPath);
 }
 function server(){
-  if (!checkSCV(workPath)) {
+  if (!scvutil.checkSCV(workPath)) {
     console.log('[scv] 不是有效的scv工程目录。'+workPath);
     return;
   }
@@ -89,24 +90,25 @@ function server(){
   var scvgulp = require('../lib/scv-gulp');
   // 当前启动状态
   if (options.info) {
-    scvgulp.info(workPath);
+    scvgulp.info();
     return;
   }
   // 启动
   if (options.start) {
-    scvgulp.start(workPath,scvPath);
+    scvgulp.start(workPath);
     return;
   }
 
   if (options.restart) {
-    scvgulp.reStart(workPath,scvPath);
+    scvgulp.reStart();
     return;
   }
 
   if (options.stop) {
-    scvgulp.stop(workPath,scvPath);
+    scvgulp.stop();
     return;
   }
+  this.outputHelp();
 }
 
 // 保存模板
@@ -116,50 +118,43 @@ function template(){
   var options= args.pop();
   // 列表
   if (options.list) {
+    console.log('[scv] 模板列表：');
     var scvtemp = require('../lib/scv-template');
-    scvtemp.list(template);
+    scvtemp.list();
     return;
   }
   // 保存
   if (options.save) {
     var workPath = process.cwd();
     var tempName = options.save;
-    if (!checkSCV(workPath)) {
+    if (!scvutil.checkSCV(workPath)) {
       console.log('[scv] 当前目录不是有效地scv工程目录');
       return;
     }
     var scvtemp = require('../lib/scv-template');
     scvtemp.save(tempName,workPath);
+    return;
   }
+  // 删除
+  if (options.delete) {
+    var tempName = options.delete;
+    var scvtemp = require('../lib/scv-template');
+    scvtemp.del(tempName);
+    return;
+  }
+  this.outputHelp();
 }
 // 发布版本
 function release(){
   var args = Array.prototype.slice.bind(arguments)();
   // console.log(args);
   var options= args.pop();
+  var scvrev = require('../lib/scv-release');
   // 列表
   if (options.list) {
-    console.log('release list is building...waiting');
+    console.log('[scv] 已发布版本列表：');
+    scvrev.list();
     return;
   }
-  var fs = require('fs'),
-      config = require(workPath+'/config.js'),
-      name = config.name,
-      version = config.version,
-      release = config.release,
-      domains = config.assetsDomain;
-  // 
-  console.log('release version is building...waiting');
-  // console.log(config);
-}
-
-// 判断是否工程目录,或者工程目录是否为空
-function checkSCV(workPath){
-  var fs = require('fs');
-  // 检查当目录是否为空
-  var exits = fs.existsSync(workPath+'/gulpfile.js') && fs.existsSync(workPath+'/node_modules');
-  if (exits) {
-    return true;
-  }
-  return false;
+  scvrev.release();
 }
