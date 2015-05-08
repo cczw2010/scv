@@ -140,7 +140,7 @@
 
 >>js文件将自动进行hint校验
 
->>image文件夹没有合并操作
+>>image文件夹没有合并操作,且只处理jpg和png后缀文件
 
 >>html文件也会进行压缩，并去除空白,但是不会处理SCRIPT, STYLE, PRE or TEXTAREA.中的有意义的空白。不处理CDATA(<!--*-->).
 
