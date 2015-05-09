@@ -84,7 +84,7 @@
 		|		|		|		|		|--...
 		|		|		|		|--common.css(css源码文件，一个文件对应上级同名目录中的一个文件)
 		|		|		|		|--...
-		|		|		|--image（子文件夹不合并,只进行压缩操作，同步到上级同名目录中）
+		|		|		|--image
 		|		|		|		|--sprites.png
 		|		|		|		|--...
 		|		|--html(静态页目录)
@@ -140,7 +140,7 @@
 
 >>js文件将自动进行hint校验
 
->>image文件夹没有合并操作,且只处理jpg和png后缀文件
+>>image文件夹,本版本不再进行压缩处理
 
 >>html文件中的资源文件请使用`相对路径`,最终路径可在config文件中配置。文件也会进行压缩，并去除空白,但是不会处理SCRIPT, STYLE, PRE or TEXTAREA.中的有意义的空白。不处理CDATA(<!--*-->).
 
@@ -161,7 +161,7 @@
 		 * @ename 应用英文名称
 		 * @descriptyion  应用描述
 		 * @version  应用版本,每次release生成的版本名称也是依据此处，请使用三段版本
-		 * @watch 工程需要处理的目录，包括js|css|image|html	
+		 * @watch 工程需要处理的目录，包括js|css|html	 image文件夹本版本不再处理
 		 * 
 		 * @main  入口html页面,测试需要知道入口。
 		 * @port	工程测试服务端口
@@ -174,8 +174,8 @@
 			ename:'scv-demo',
 			description:'scv工程流模板工程',
 			version:'1.0.0',
-			watch:['js','css','image','html'],
-			// 测试参数
+			watch:['js','css','html'],
+			// 测试参数，暂未实现
 			main:'html/index.html',
 			port:8001,
 			//发布参数
@@ -183,6 +183,5 @@
 			assetsDomain:{
 					'js':'',	// http://cdn.xxx.com/js/
 					'css':'',	//http://css.xxx.com/xx/
-					'image':'',
 				},
 		};
