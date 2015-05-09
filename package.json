@@ -24,7 +24,6 @@
     "publish",
     "release"
   ],
-  "engineStrict": true,
   "engines": {
     "node": ">=0.8.0"
   },
@@ -45,8 +44,9 @@
     "stream-combiner2": "^1.0.2",
     "through2": "^0.6.5"
   },
-  "devDependencies": {},
-  "main": "lib",
+  "devDependencies": {
+    "mocha": "*"
+  },
   "scripts": {},
   "bin": {
     "scv": "bin/scv"
