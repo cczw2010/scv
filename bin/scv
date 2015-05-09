@@ -7,6 +7,7 @@ process.bin = process.title = 'scv';
 var fs = require('fs');
 var path = require('path');
 var scvutil = require('../lib/scv-util.js');
+var scvtemp = require('../lib/scv-template');
 var scvPath = path.dirname(fs.realpathSync(__filename)) + "/../";
 var workPath = process.cwd();
 /**命令行子命令设置***************/
@@ -73,7 +74,6 @@ function init(tempName){
     }
   });
 
-  var scvtemp = require('../lib/scv-template');
   console.log('[scv] 工程初始化...');
   scvtemp.copy(tempName,workPath);
 }
@@ -119,26 +119,22 @@ function template(){
   // 列表
   if (options.list) {
     console.log('[scv] 模板列表：');
-    var scvtemp = require('../lib/scv-template');
     scvtemp.list();
     return;
   }
   // 保存
   if (options.save) {
     var workPath = process.cwd();
-    var tempName = options.save;
     if (!scvutil.checkSCV(workPath)) {
       console.log('[scv] 当前目录不是有效地scv工程目录');
       return;
     }
-    var scvtemp = require('../lib/scv-template');
-    scvtemp.save(tempName,workPath);
+    scvtemp.save(options.save,workPath);
     return;
   }
   // 删除
   if (options.delete) {
     var tempName = options.delete;
-    var scvtemp = require('../lib/scv-template');
     scvtemp.del(tempName);
     return;
   }
@@ -147,26 +143,24 @@ function template(){
 // 发布版本
 function release(){
   var args = Array.prototype.slice.bind(arguments)(),
-    options= args.pop(),
-    revPath = process.cwd()+'/'+scvutil.revSpace+'/';
+    options= args.pop();
   // 列表
   if (options.list) {
     console.log('[scv] 已发布版本列表：');
-    fs.readdir(revPath, function(err, paths) {
+    fs.readdir(scvutil.revSpace, function(err, paths) {
       if (err) {
         throw err;
       }
-      paths.forEach(function(path) {
-        fs.stat(relPath+path,function(err,stat){
-          if (!err && stat.isDirectory(path)) {
-            console.log('> '+path);
+      paths.forEach(function(p) {
+        fs.stat(path.join(scvutil.revSpace,p),function(err,stat){
+          if (!err && stat.isDirectory(p)) {
+            console.log('> '+p);
           }
         });
-        
       });
-    })
+    });
     return;
   }
   var scvgulp = require('../lib/scv-gulp');
-  scvgulp.release(revPath);
+  scvgulp.release(scvutil.revSpace);
 }

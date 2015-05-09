@@ -10,7 +10,7 @@
  * @port	工程测试服务端口
  * 
  * @release  发布目录的相对路径，这里相对的是scv根目录
- * @assetsDomain 资源文件发布时的前置域名，比如要发布到cdn：http://cdn.xxx.com/img/,默认空表示相对路径
+ * @assetsDomain 资源文件发布时的前置域名，比如要发布到cdn：http://cdn.xxx.com/img/,默认空表示保留当前路径
  */
 module.exports = {
 		name:'示例工程',
