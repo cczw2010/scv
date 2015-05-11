@@ -1,6 +1,6 @@
 {
   "name": "scv",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "SCV前端工程自动化工具，工作流",
   "license": "MIT",
   "repository": {

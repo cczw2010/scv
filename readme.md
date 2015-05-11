@@ -12,6 +12,8 @@
 
  工具环境当然使用nodejs,多人协作可以借助于git,js库版本管理可以用bower,工程流资源处理用gulp，测试可以借助于phantomjs，CasperJS，资源文件发布版本管理可以使用文件的数字摘要算法。另外部分gulp插件方法代码借鉴了[gulp-concat](https://www.npmjs.com/package/gulp-concat)和[gulp-md5-plus](https://github.com/wpfpizicai/gulp-md5-plus)
  
+ 针对平台：Mac OS,linux,windows7以上
+
 ##关于模块化开发
 
   SCV是不强制给开发者订立开发规范的，但是还是建议大家按照一定的规范来开发。比如前端模块开发规范（**CMD**|**AMD**）。这个目前是比较流行的了，对于提升一定的big还是有点用处的。
