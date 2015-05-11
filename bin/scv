@@ -8,7 +8,7 @@ var fs = require('fs');
 var path = require('path');
 var scvutil = require('../lib/scv-util.js');
 var scvtemp = require('../lib/scv-template');
-var scvPath = path.dirname(fs.realpathSync(__filename)) + "/../";
+var scvPath = path.resolve(path.dirname(fs.realpathSync(__filename)),'../');
 var workPath = process.cwd();
 /**命令行子命令设置***************/
 var program = require('commander');
@@ -60,22 +60,26 @@ process.on('SIGINT', function (){
 });
 // 初始化工程
 function init(tempName){
-  if (scvutil.checkSCV(workPath)) {
+  if (scvutil.checkSCV()) {
     console.log('[scv] 工程目录不为空，无法初始化。');
     return;
   }
-  var exec = require('child_process').exec,commstr;
+  var exec = require('child_process').exec,commstr,
+    path_modules = path.join(scvPath,'node_modules'),
+    ln_modules = path.join(workPath,'node_modules'),
+    path_gulpfile = path.join(scvPath,'lib','gulpfile.js'),
+    ln_gulpfile = path.join(workPath,'gulpfile.js');
   if (process.platform==='win32') { //only > win7
     var os = require('os');
     if (os.release()<'6.1') {
       console.log('[scv] error! windows系统仅支持win7以上系统！');
       return;
     }
-    commstr = 'mklink /D '+workPath+'node_modules '+scvPath+'/node_modules;';
-    commstr+='mklink '+workPath+'gulpfile.js '+scvPath+'lib//gulpfile.js;';
+    commstr = 'mklink /D '+ln_modules+' '+path_modules;
+    commstr+=';mklink '+ln_gulpfile+' '+path_gulpfile;
   }else{
-    commstr = 'ln -s '+scvPath+'node_modules '+workPath+'/node_modules;';
-    commstr+='ln -s '+scvPath+'lib/gulpfile.js '+workPath+'/gulpfile.js;';
+    commstr = 'ln -s '+path_modules+' '+ln_modules;
+    commstr+=';ln -s '+path_gulpfile+' '+ln_gulpfile;
   }
   exec(commstr,function(error, stdout, stderr){
     if (error !== null) {
@@ -88,7 +92,7 @@ function init(tempName){
   scvtemp.copy(tempName,workPath);
 }
 function server(){
-  if (!scvutil.checkSCV(workPath)) {
+  if (!scvutil.checkSCV()) {
     console.log('[scv] 不是有效的scv工程目录。'+workPath);
     return;
   }
@@ -135,7 +139,7 @@ function template(){
   // 保存
   if (options.save) {
     var workPath = process.cwd();
-    if (!scvutil.checkSCV(workPath)) {
+    if (!scvutil.checkSCV()) {
       console.log('[scv] 当前目录不是有效地scv工程目录');
       return;
     }
