@@ -138,11 +138,11 @@
 >**condig.js**是app配置文件，这个需要用户维护一些应用基本信息
 
 >**workspace**是工作区，用户在此开发，*assets*目录是存放资源文件的地方，js,css,image。
-*html**文件夹是静态html文件.`所有文件的后缀请使用小写！`
+>**html**文件夹是静态html文件.`所有文件的后缀请使用小写！`
 
 >开发区内部所有文件修改保存时都会自动同步到*tmp暂存区*对应目录下的同名目录。
 
->assets资源文件夹下的css和js源文件目录中的任意层级子文件夹里如果包含`.one`文件，那么该文件夹下所有的文件将按照**文件名排序**合并成一个与文件夹同名的文件，与该文件夹同级。需要注意一下亮点：【1】 拥有`.one`文件的文件夹请不要再有子文件夹了,另外建立要合并的文件夹时请`先创建.one文件`以防止scv实时对其内文件进行未合并处理。【2】html代码中引入拥有`.one`文件的文件夹资源时，引入的是与文件夹同名的js文件。对资源文件的具体操作如下：
+>assets是被版本化管理的资源文件夹，其下的css和js源文件目录中的任意层级子文件夹里如果包含`.one`文件，那么该文件夹下所有的文件将按照**文件名排序**合并成一个与文件夹同名的文件，与该文件夹同级。需要注意一下亮点：【1】 拥有`.one`文件的文件夹请不要再有子文件夹了,另外建立要合并的文件夹时请`先创建.one文件`以防止scv实时对其内文件进行未合并处理。【2】html代码中引入拥有`.one`文件的文件夹资源时，引入的是与文件夹同名的js文件。对资源文件的具体操作如下：
 
 >>css文件将自动增加css3浏览器私有前缀(依据[caniuse](http://caniuse.com/))，规则使用的是默认规则，具体意义可查看[browserslist](https://github.com/ai/browserslist)所以书写时请只写属性的标准写法即可
 
@@ -150,13 +150,15 @@
 
 >>image文件夹,本版本不再进行压缩处理,只是进行版本管理。
 
->>html文件中的资源文件请使用`相对路径`,最终路径可在config文件中配置。文件也会进行压缩，并去除空白,但是不会处理SCRIPT, STYLE, PRE or TEXTAREA.中的有意义的空白。不处理CDATA(<!--*-->).
+>html文件中的资源文件请使用`相对路径`,最终路径可在config文件中配置。文件也会进行压缩，并去除空白,但是不会处理SCRIPT, STYLE, PRE or TEXTAREA.中的有意义的空白。不处理CDATA(<!--*-->).
+
+>`自定义目录`可能除了assets和html之外你还需要其他的目录来组建工程，可以在工程的config.js中设置
 
 >**tmp**暂存区，内部文件与workspace保持一致，该目录是自动维护的，请不要修改
 
 >**release**版本发布区,发布一次这里生成一个版本文件夹，自动维护资源文件版本，内部是实际可发布的app文件集合.
 
->由此可见，从上面的结构来说，基本上开发者只需要在**workspace**目录下按照目录规范来卡法就可以了。当然额外的你只需要配置一个**config.js**文件，下面我们来详细介绍。
+>由此可见，从上面的结构来说，基本上开发者只需要在**workspace**目录下按照目录规范来开发就可以了。当然额外的你只需要配置一个**config.js**文件，下面我们来详细介绍。
  
 
 ###config配置
@@ -164,25 +166,25 @@
 >下面是一个完整的config配置文件：
 
 		/**
-		 * 工程配置
-		 * @name 应用名称
-		 * @ename 应用英文名称
-		 * @descriptyion  应用描述
-		 * @version  应用版本,每次release生成的版本名称也是依据此处，请使用三段版本
-		 * @watch 工程需要处理的目录，包括js|css|html	 image文件夹本版本不再处理
-		 * 
-		 * @main  入口html页面,测试需要知道入口。
-		 * @port	工程测试服务端口
-		 * 
-		 * @release  发布目录的相对路径，这里相对的是scv根目录
-		 * @assetsDomain 资源文件发布时的前置域名，比如要发布到cdn：http://cdn.xxx.com/img/,默认空表示相对路径
-		 */
+ 		* 工程配置
+ 		* @name 应用名称
+ 		* @ename 应用英文名称
+ 		* @descriptyion  应用描述
+ 		* @version  应用版本,每次release生成的版本名称也是依据此处，请使用三段版本
+ 		* @watch 	工程需要处理的目录，包括js|css|image|html	,image本版本不做压缩处理
+ 		* @watchExt 工程所需其他目录，路径相对于工程根目录，例如:tpl,php等，不作处理纯拷贝
+ 		* @main  入口html页面,测试需要知道入口。
+ 		* @port	工程测试服务端口
+ 		* 
+ 		* @release  发布目录的相对路径，这里相对的是scv根目录
+ 		* @assetsDomain 资源文件发布时的前置域名，比如要发布到cdn：http://cdn.xxx.com/img/,默认空表示保留当前路径
+ 		*/
 		module.exports = {
 			name:'示例工程',
 			ename:'scv-demo',
 			description:'scv工程流模板工程',
 			version:'1.0.0',
-			watch:['js','css','html'],
+			watch:['js','css','image','html'],
 			// 测试参数，暂未实现
 			main:'html/index.html',
 			port:8001,
@@ -191,5 +193,6 @@
 			assetsDomain:{
 					'js':'',	// http://cdn.xxx.com/js/
 					'css':'',	//http://css.xxx.com/xx/
+					'image':'',	//http://css.xxx.com/i/
 				},
 		};

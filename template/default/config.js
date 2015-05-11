@@ -4,8 +4,8 @@
  * @ename 应用英文名称
  * @descriptyion  应用描述
  * @version  应用版本,每次release生成的版本名称也是依据此处，请使用三段版本
- * @watch 工程需要处理的目录，包括js|css|image|html	,image本版本不做压缩处理
- * 
+ * @watch 	工程需要处理的目录，包括js|css|image|html	,image本版本不做压缩处理
+ * @watchExt 工程所需其他目录，路径相对于工程根目录，例如:tpl,php等，不作处理纯拷贝
  * @main  入口html页面,测试需要知道入口。
  * @port	工程测试服务端口
  * 
@@ -18,6 +18,7 @@ module.exports = {
 		description:'scv工程流模板工程',
 		version:'1.0.0',
 		watch:['js','css','image','html'],
+		watchExt:[],
 		// 测试参数
 		// main:'html/index.html',
 		// port:8001,
