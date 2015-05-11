@@ -71,10 +71,10 @@ function init(tempName){
       console.log('[scv] error! windows系统仅支持win7以上系统！');
       return;
     }
-    commstr = 'mklink /D '+workPath+'node_modules/ '+scvPath+'/node_modules;';
+    commstr = 'mklink /D '+workPath+'node_modules '+scvPath+'/node_modules;';
     commstr+='mklink '+workPath+'gulpfile.js '+scvPath+'lib//gulpfile.js;';
   }else{
-    commstr = 'ln -s '+scvPath+'node_modules/ '+workPath+'/node_modules;';
+    commstr = 'ln -s '+scvPath+'node_modules '+workPath+'/node_modules;';
     commstr+='ln -s '+scvPath+'lib/gulpfile.js '+workPath+'/gulpfile.js;';
   }
   exec(commstr,function(error, stdout, stderr){
