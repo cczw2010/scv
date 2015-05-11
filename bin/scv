@@ -76,7 +76,7 @@ function init(tempName){
       return;
     }
     commstr = 'mklink /D '+ln_modules+' '+path_modules;
-    commstr+=';mklink '+ln_gulpfile+' '+path_gulpfile;
+    commstr+='&mklink '+ln_gulpfile+' '+path_gulpfile;
   }else{
     commstr = 'ln -s '+path_modules+' '+ln_modules;
     commstr+=';ln -s '+path_gulpfile+' '+ln_gulpfile;
