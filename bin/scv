@@ -33,6 +33,7 @@ program.command('server')
 program.command('release')
   .description('发布工程')
   .option('-l --list','显示已经发布的版本列表')
+  .option('-i --info <version>','显示已发布版本的资源文件版本日志')
   .action(release);
 program.command('template')
   .description('将当前工程保存为模板')
@@ -158,12 +159,17 @@ function template(){
 function release(){
   var args = Array.prototype.slice.bind(arguments)(),
     options= args.pop();
+  if (!scvutil.checkSCV()) {
+    console.log('[scv] 当前目录不是有效地scv工程目录');
+    return;
+  }
   // 列表
   if (options.list) {
     console.log('[scv] 已发布版本列表：');
-    fs.readdir(scvutil.revSpace, function(err, paths) {
+    fs.readdir(path.join(workPath,scvutil.revSpace), function(err, paths) {
       if (err) {
-        throw err;
+        console.log('[scv] ',err);
+        return;
       }
       paths.forEach(function(p) {
         fs.stat(path.join(scvutil.revSpace,p),function(err,stat){
@@ -175,6 +181,21 @@ function release(){
     });
     return;
   }
+  // 日志
+  if (options.info) {
+    var verPath = path.join(scvutil.revSpace,options.info);
+    if (!fs.existsSync(verPath)) {
+      console.log('[scv] 该版本尚未发布');
+      return;
+    }
+    var logPath = path.join(verPath,scvutil.logFile);
+    console.log('[scv] v'+options.info+'资源文件版本日志('+logPath+')：');
+    fs.readFile(logPath, function (err, data) {
+      if (err) return;
+      console.log('[scv] ',data.toString());
+    });
+    return;
+  }
   var scvgulp = require('../lib/scv-gulp');
-  scvgulp.release(scvutil.revSpace);
+  scvgulp.release();
 }
