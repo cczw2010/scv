@@ -185,6 +185,7 @@
 			description:'scv工程流模板工程',
 			version:'1.0.0',
 			watch:['js','css','image','html'],
+			watchExt:[],
 			// 测试参数，暂未实现
 			main:'html/index.html',
 			port:8001,
