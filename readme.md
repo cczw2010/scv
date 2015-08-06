@@ -15,7 +15,7 @@
   
 ##支持平台
  
- 针对平台：Mac OS,linux,`windows7(需要管理员权限运行cmd)`以上
+ 针对平台：Mac OS,linux,`windows7(需要管理员权限运行cmd)`以上(但也不保证兼容)
 
 ##关于模块化开发
 
@@ -46,7 +46,7 @@
 
  	#安装
  	npm install -g scv
-	npm install -g gulp  #前期依然需要安装gulp，后期考虑合并
+	npm install -g gulp  #前期依然需要安装gulp，后期考虑自己实现
  
  	#创建工程
  	
@@ -55,7 +55,7 @@
 	scv init 		#初始化工程（按照约定规范生成目录，并启动工程监控）
 	#scv init test	#或者按照模板初始化新工程
 
-	#停止gulp服务,服务启动后将占用控制台窗口以输出gulp工作流信息，用户可以在这里查看每次文件修改后scv的操作日志和代码错误以维护代码。用户可以通过`ctrl+c`中断服务
+	#启动gulp服务,服务启动后将占用控制台窗口以输出gulp工作流信息，用户可以在这里查看每次文件修改后scv的操作日志和代码错误以维护代码。用户可以通过`ctrl+c`中断服务
 	scv server -s
 	
 	#停止gulp服务
