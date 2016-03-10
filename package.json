@@ -1,7 +1,8 @@
 {
   "name": "scv",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "SCV前端工程自动化工具，工作流",
+  "homepage": "https://github.com/cczw2010/scv",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,8 +13,7 @@
     "email": "71752352@qq.com",
     "url": "http://www.cnblogs.com/cczw/"
   },
-  "homepage": "https://github.com/cczw2010/scv",
-  "keywords": [
+  "tags": [
     "scv",
     "fis",
     "gulp",
@@ -22,38 +22,48 @@
     "revision",
     "version",
     "publish",
-    "release"
+    "release",
+    "build"
   ],
-  "engines": {
-    "node": ">=0.8.0"
-  },
-  "dependencies": {
-    "commander": "^2.8.0",
-    "concat-with-sourcemaps": "^1.0.2",
-    "gulp": "^3.8.11",
-    "gulp-autoprefixer": "^2.2.0",
-    "gulp-connect": "^2.2.0",
-    "gulp-htmlmin": "^1.1.1",
-    "gulp-jshint": "^1.10.0",
-    "gulp-minify-css": "^1.1.0",
-    "gulp-uglify": "^1.2.0",
-    "gulp-util": "^3.0.4",
-    "gulp-watch": "^4.2.4",
-    "map-stream": "0.0.5",
-    "orchestrator": "^0.3.7",
-    "stream-combiner2": "^1.0.2",
-    "through2": "^0.6.5",
-    "vinyl-fs": "^1.0.0"
-  },
-  "devDependencies": {},
-  "scripts": {},
+  "files": [
+    "index.js",
+    "lib",
+    "bin"
+  ],
+  "main": "index.js",
   "bin": {
-    "scv": "bin/scv"
+    "scv": "./bin/scv.js"
   },
-  "preferGlobal": true,
-  "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/cczw2010/scv/issues"
   },
+  "engines": {
+    "node": ">=0.9"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.3.3",
+    "chalk": "^1.1.1",
+    "clean-css": "^3.4.10",
+    "commander": "^2.9.0",
+    "crypto": "0.0.3",
+    "css": "^2.2.1",
+    "deprecated": "0.0.1",
+    "file-type": "^3.8.0",
+    "gulp-watch": "^4.3.5",
+    "html-minifier": "^1.2.0",
+    "imagemin-gifsicle": "^4.2.0",
+    "imagemin-jpegtran": "^4.3.2",
+    "imagemin-optipng": "^4.3.0",
+    "imagemin-svgo": "^4.2.1",
+    "jshint": "^2.9.1",
+    "orchestrator": "^0.3.7",
+    "postcss": "^5.0.19",
+    "through2": "^2.0.0",
+    "uglify-js": "^2.6.2",
+    "vinyl": "^1.1.1",
+    "vinyl-fs": "^2.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {},
   "private": false
 }

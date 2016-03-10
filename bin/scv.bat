@@ -1,1 +1,0 @@
-node.exe ./scv %1
