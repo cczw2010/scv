@@ -25,7 +25,7 @@ process.env.tempPath = path.join(process.env.globalPath, "template");
 
 /***************命令行设置-start***************/
 program
-  .version('2.0.0')
+  .version('2.0.1')
   .usage('[options] 类似gulp的用法(-f,-t)\r\n\t scv command [options] 默认前端工程自动化用法,执行命令:scv [command] -h  可查看相关子命令的帮助');
 
 // 类似gulp的使用方法
@@ -57,7 +57,7 @@ program.command('hint')
 //SCV自定义服务-release
 program.command('release')
   .alias('R')
-  .description('Scv前端工程自动化-发布相关命令')
+  .description('Scv前端工程自动化-发布相关命令(暂未重构完成)')
   .option('-l --list','显示已经发布的版本列表')
   .option('-i --info <release version>','显示已发布版本的资源文件版本日志')
   .action(commRelease);
