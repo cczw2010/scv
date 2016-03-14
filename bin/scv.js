@@ -16,7 +16,7 @@ var commRelease = require('../lib/scv-release');
 //scv全局目录
 process.env.globalPath = path.dirname(__dirname);
 //当前工作目录的scv模块位置
-process.env.localPath = path.join(process.env.PWD,'node_modules','scv');
+process.env.localPath = path.join(process.cwd(),'node_modules','scv');
 //默认工程配置文件名
 process.env.configPath = 'config.js';
 //模板目录
