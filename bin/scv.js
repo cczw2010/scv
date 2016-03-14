@@ -25,7 +25,7 @@ process.env.tempPath = path.join(process.env.globalPath, "template");
 
 /***************命令行设置-start***************/
 program
-  .version('2.0.1')
+  .version('2.0.2')
   .usage('[options] 类似gulp的用法(-f,-t)\r\n\t scv command [options] 默认前端工程自动化用法,执行命令:scv [command] -h  可查看相关子命令的帮助');
 
 // 类似gulp的使用方法
