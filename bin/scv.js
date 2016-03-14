@@ -57,8 +57,7 @@ program.command('hint')
 //SCV自定义服务-release
 program.command('release')
   .alias('R')
-  .description('Scv前端工程自动化-发布相关命令(暂未重构完成)')
-  .option('-r --run','发布')
+  .description('Scv前端工程自动化-发布相关命令')
   .option('-l --list','显示已经发布的版本列表')
   .option('-i --info [release version]','显示已发布版本的资源文件版本日志,默认为当前版本')
   .action(commRelease);
