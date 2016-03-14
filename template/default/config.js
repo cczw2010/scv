@@ -12,13 +12,13 @@
 	* @watchs   [watchItem,watchItem,...]
 	*    这是工程对所有资源文件的操作配置,数组中的每个元素代表一个监控对象配置对象(目录),每个watchItem监控对象最终都会进行拷贝工作到发布目录,具体结构如下:
 	*    {
-	*		// 监控对象的类型,目前系统支持:js|css|image|html|other几种内置默认类型.出other外每种类型都有自己的actions,other没有对应的action,只会平移复制.
+	*		// 监控对象的类型,目前系统支持:js|css|html|other几种内置默认类型.出other外每种类型都有自己的actions,other没有对应的action,只会平移复制.
 	*		type:'js',
 	*		// 监控目录数组,相对于工作目录(workspace)
 	*		paths:['assets/js'],
 	*		// 监控目录中需要监控文件的后缀名数组
 	*		exts:['js'],
-	*		// 对监控目录进行的动作,执行顺序为: parser->concat->prefix->compress ,如果有一个出错则中断文件操作
+	*		// 对监控目录进行的动作,执行顺序为: hint->concat->prefix->compress ,如果有一个出错则中断文件操作
 	*		actions:{
 	*			
 	*   	//>是否进行语法检查,默认false,该动作支持的类型有:js|css
@@ -26,11 +26,10 @@
 	*			//[css]	使用的css插件的parse方法(参数slient程序中恒为true)
 	*			hint:true|false|{options},
 	* 
-	*			//>是否压缩,默认false,该动作支持的类型有:js|css|image|html . 
+	*			//>是否压缩,默认false,该动作支持的类型有:js|css|html . 
 	*			//[js]	使用的是uglifyjs,当为true时 使用的是默认的配置,个性化配置可参考uglifyjs(参数fromString程序中恒为true)
 	*			//[css]	使用的是clean-css插件,
 	*			//[html]	使用html-minifier插件,默认{collapseWhitespace: true,minifyJS:true,minifyCSS:true,relateurl:true,removeComments: true}
-	*			//[image]	使用imagemin-optipng处理png,imagemin-jpegtran处理jpg,imagemin-gifsicle处理gif,imagemin-svgo处理svg. 配置则为这三个插件的配置文件组合.
 	*			compress:true|false|{options},
 	*			
 	*   	//>自动为代码增加浏览器私有前缀 仅支持:css

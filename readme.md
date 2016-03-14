@@ -109,7 +109,7 @@
 	#校验配置文件中某类型的配置项, 不设则为全部支持hint的类型
 	scv hint -o|--otype  [css|
 	#实时监控文件变化,校验文件. 可结合-o指定监控类型,用户可以通过`ctrl+c`中断服务
-	scv hint -w
+	scv hint -w|--watch
 	
 	/*****************
 	*Scv前端工程自动化-模板命令
@@ -117,13 +117,13 @@
 	* 2.用户可随时将自己的工作目录和配置文件保存成模板,也可随时删除模板
 	*****************/
 	#生成模板，将当前工程保存为模板(mytmp)，初始化新工程时可以使用该模板初始化
-	scv template -s mytmp
+	scv template -s|--save mytmp
 	
 	#查看模板列表
-	scv template -l
+	scv template -l|--list
 
 	#删除已有模板
-	scv template -d mytmp
+	scv template -d|--delete mytmp
 
 	/*****************
 	*Scv前端工程自动化-发布相关命令
@@ -132,10 +132,10 @@
 	scv release
 
 	#当前发布版本记录
-	scv release -l
+	scv release -l|--list
 	
-	#某发布版本的资源文件版本日志
-	scv release -i 1.0.0
+	#某发布版本的资源文件版本日志,不输入版本号则默认当前工程版本
+	scv release -i|--info 1.0.0
 	
 ##用法二中默认模板目录
 
@@ -183,7 +183,7 @@
 		*		paths:['assets/js'],
 		*		// 监控目录中需要监控文件的后缀名数组
 		*		exts:['js'],
-		*		// 对监控目录进行的动作,执行顺序为: parser->concat->prefix->compress ,如果有一个出错则中断文件操作
+		*		// 对监控目录进行的动作,执行顺序为: hint->concat->prefix->compress ,如果有一个出错则中断文件操作
 		*		actions:{
 		*			
 		*			/**
@@ -242,7 +242,7 @@
 				actions:{
 					concat:'all.js',
 					compress:{mangle:true},
-					parser:{unused:true}
+					hint:{unused:true}
 				},
 				depth:false,
 				domain:''
@@ -253,7 +253,7 @@
 				actions:{
 					concat:false,
 					compress:true,
-					parser:true
+					hint:true
 				},
 				depth:true,
 				domain:''
@@ -272,7 +272,7 @@
 				actions:{
 					concat:false,
 					compress:false,
-					parser:true
+					hint:true
 				},
 				depth:true,
 				domain:''

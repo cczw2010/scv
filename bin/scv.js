@@ -40,7 +40,7 @@ program
 
 /******SCV自定义服务 start********/
 //SCV自定义服务-工程初始化
-program.command('init [template]')
+program.command('init [template name]')
   .alias('I')
   .description('Scv前端工程自动化-初始化命令')
   // .option('-f, --force','强制初始化，如果目录不为空将清空')
@@ -58,8 +58,9 @@ program.command('hint')
 program.command('release')
   .alias('R')
   .description('Scv前端工程自动化-发布相关命令(暂未重构完成)')
+  .option('-r --run','发布')
   .option('-l --list','显示已经发布的版本列表')
-  .option('-i --info <release version>','显示已发布版本的资源文件版本日志')
+  .option('-i --info [release version]','显示已发布版本的资源文件版本日志,默认为当前版本')
   .action(commRelease);
 //SCV自定义服务-template
 program.command('template')
@@ -118,5 +119,5 @@ if (!process.argv.slice(2).length) {
 
 // 退出处理
 process.on('exit', function(code) {
-	sutil.log('执行结束:',code);
+	// sutil.log('执行结束:',code);
 });
