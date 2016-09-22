@@ -25,12 +25,11 @@
     "release"
   ],
   "files": [
-    "index.js",
     "lib/",
     "bin/",
     "template/"
   ],
-  "main": "index.js",
+  "main": "./lib/index.js",
   "bin": {
     "scv": "./bin/scv.js"
   },
