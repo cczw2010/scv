@@ -22,14 +22,13 @@
     "revision",
     "version",
     "publish",
-    "release",
-    "build"
+    "release"
   ],
   "files": [
     "index.js",
-    "lib",
-    "bin",
-    "template"
+    "lib/",
+    "bin/",
+    "template/"
   ],
   "main": "index.js",
   "bin": {
