@@ -10,7 +10,7 @@ var Orchestrator = require('orchestrator');
 var deprecated = require('deprecated');
 
 function Scv(){
-  this.version = '2.0.0';
+  this.version = '2.1.0';
 }
 
 //任务流使用orchestrator实现,并没有像gulp一样直接继承并重指向为task方法. 而是将orchestrator实例直接赋到task属性上. 
