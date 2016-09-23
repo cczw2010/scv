@@ -11,6 +11,7 @@ var commTemplate = require('../lib/scv-template');
 var commInit = require('../lib/scv-init');
 var commHint = require('../lib/scv-hint');
 var commRelease = require('../lib/scv-release');
+var cliscv =require('../lib/index');
 
 // console.log(process);
 //scv全局目录
@@ -25,7 +26,7 @@ process.env.tempPath = path.join(process.env.globalPath, "template");
 
 /***************命令行设置-start***************/
 program
-  .version('2.0.2')
+  .version(cliscv.version)
   .usage('[options] 类似gulp的用法(-f,-t)\r\n\t scv command [options] 默认前端工程自动化用法,执行命令:scv [command] -h  可查看相关子命令的帮助');
 
 // 类似gulp的使用方法
@@ -101,6 +102,7 @@ if (program.scvfile) {
 	}
 	// 执行默认或者指定任务
 	process.nextTick(function(){
+		// 必须用本地的,不然任务导入的是全局的scv任务列表里去了, 全局和本地不共享任务列表
 		var scv = require(process.env.localPath);
 		if (!scv.task.hasTask(runTask)) {
 			sutil.log('没有定义入口任务:'+runTask);

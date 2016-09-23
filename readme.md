@@ -49,7 +49,7 @@
  	scv -h
  	
  **|用法一**
->命令行类似gulp的CLI用法,任务文件中兼容gulp插件,(当然这不是重点,纯属顺手,用法二才是本工具重点)
+>命令行类似gulp的常规书写代码用法,任务文件中兼容gulp插件,(当然这不是重点,纯属顺手,用法二才是本工具重点)
 
 	#安装本地scv插件
 	npm install scv
@@ -62,19 +62,19 @@
 
 	scv.src		#参考gulp.src, 设置文件来源
 	scv.dest		#参考gulp.dest, 在文件流目标位置生成新文件
-	>gulp.watch,  gulp老版本的vinyl-fs基于gaze实现的,不过性能貌似有些问题,后来用chokidar实现了单独gulp-watch插件, 这里强烈建议.scv就不单独实现了.
+	>gulp.watch,  gulp老版本的vinyl-fs基于gaze实现的,不过性能貌似有些问题,后来用chokidar实现了单独gulp-watch插件, 这里强烈建议.scv就不单独实现了,用户可以自行添加.
 	
 	#scv.task与gulp略有区别,gulp是继承orchestrator并重指向可部分方法名.
 	scv的task对象是任务流orchestrator的实例,具体使用方法参考orchestrator的api. 
 	值得一提的是,如果你不使用-t参数指定入口任务,那么你就需要在任务文件中实现一个default名称的任务为入口任务, 因为scv会自动调用`scv.task.start('default')` 来启动它.*/
-	scv.task.add			#等同于gulp.task
-	scv.task.hasTask		#检查是否存在某任务
+	scv.task.add		#等同于gulp.task
+	scv.task.hasTask	#检查是否存在某任务
 	scv.task.start		#启动任务
 	#新增加同步执行任务列表方法,上一个任务的结束(task_stop事件)自动执行下一个任务, 可在设计任务的时候,在逻辑中调用任务的callback函数告诉引擎你的任务真正结束了, 不传参默认所有任务列表
 	scv.task.startQueue(taskarray)	
  
  **|用法二**
- >scv默认实现了一套任务文件工作流(全局安装目录下的scvfile.js任务文件), 工程的参数设定依赖工作目录下的config.js文件.并提供了一系列的子命令,形成一套完整的前端工程自动化工具
+ >scv默认实现了一套任务文件工作流CLI命令(全局安装目录下的scvfile.js任务文件), 工程的参数设定依赖工作目录下的config.js文件.并提供了一系列的子命令,形成一套完整的前端工程自动化工具
  
  	#安装全局cli工具
  	npm install -g scv
