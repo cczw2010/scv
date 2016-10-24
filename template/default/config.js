@@ -20,23 +20,23 @@
 	*		exts:['js'],
 	*		// 对监控目录进行的动作,执行顺序为: hint->concat->prefix->compress ,如果有一个出错则中断文件操作
 	*		actions:{
-	*			
+	*
 	*   	//>是否进行语法检查,默认false,该动作支持的类型有:js|css
 	*    	//[js]	使用的是jshint插件, 当为true时使用相关工具的默认配置,{outSourceMap:false,compress:{unused:false}}
 	*			//[css]	使用的css插件的parse方法(参数slient程序中恒为true)
 	*			hint:true|false|{options},
-	* 
-	*			//>是否压缩,默认false,该动作支持的类型有:js|css|html . 
+	*
+	*			//>是否压缩,默认false,该动作支持的类型有:js|css|html .
 	*			//[js]	使用的是uglifyjs,当为true时 使用的是默认的配置,个性化配置可参考uglifyjs(参数fromString程序中恒为true)
 	*			//[css]	使用的是clean-css插件,
 	*			//[html]	使用html-minifier插件,默认{collapseWhitespace: true,minifyJS:true,minifyCSS:true,relateurl:true,removeComments: true}
 	*			compress:true|false|{options},
-	*			
+	*
 	*   	//>自动为代码增加浏览器私有前缀 仅支持:css
 	*    	//[css]	使用autoprefixer插件, 具体参数参考autoprefixer插件. 数据来源参考can i use
 	*			prefix:false|true|[options],
-	*			
-	*   	//>合并文件夹操作,该动作支持的类型有:js|css|html|other. 
+	*
+	*   	//>合并文件夹操作,该动作支持的类型有:js|css|html|other.
 	*    	//值为合并后的文件路径名(,相对于工作目录workspace),系统将在需要合并的目录同级生成生成目标文件(按名称排序),如不需合并则设为false
 	*			concat:'assets/js/all.js',
 	*		},
@@ -63,7 +63,7 @@ module.exports = {
 		tmpSpace:'tmp',
 		releaseSpace:'release',
 		// *资源文件配置
-		watchs:[{	
+		watchs:[{
 				type:'css',
 				paths:['assets/css'],
 				exts:['css'],
@@ -75,7 +75,7 @@ module.exports = {
 				},
 				depth:true,
 				domain:''
-			},{	
+			},{
 				type:'js',
 				paths:['assets/js'],
 				exts:['js'],
@@ -87,7 +87,7 @@ module.exports = {
 				},
 				depth:true,
 				domain:''
-			},{	
+			},{
 				type:'html',
 				paths:['html'],
 				exts:['html','tpl'],
@@ -97,7 +97,7 @@ module.exports = {
 				},
 				depth:true,
 				domain:''
-			},{	
+			},{
 				type:'other',
 				paths:['assets/image'],
 				exts:['*'],

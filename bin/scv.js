@@ -10,6 +10,7 @@ var sutil = require('../lib/sutil');
 var commTemplate = require('../lib/scv-template');
 var commInit = require('../lib/scv-init');
 var commHint = require('../lib/scv-hint');
+var commCompress = require('../lib/scv-compress');
 var commRelease = require('../lib/scv-release');
 var cliscv =require('../lib/index');
 
@@ -54,7 +55,15 @@ program.command('hint')
   .option('-o --otype [type name]','指定校验配置项中某类型的监控文件(css|js),不设置则为全部')
   .option('-w --watch','开启实时监控校验')
   .action(commHint);
-  
+
+//SCV自定义服务-compress 压缩应该有指向目标目录(tmp)
+program.command('compress')
+  .alias('H')
+  .description('Scv前端工程自动化-文件压缩命令,压缩后的文件所在目录由工程配置文件中的tempSpace项指定')
+  .option('-o --otype [type name]','指定压缩配置项中某类型的监控文件(css|js),不设置则为全部')
+  .option('-w --watch','开启实时监控压缩')
+  .action(commCompress);
+
 //SCV自定义服务-release
 program.command('release')
   .alias('R')
@@ -93,7 +102,7 @@ if (program.scvfile) {
 	}
 	sutil.log('导入指定任务文件:'+scvfile);
 	require(scvfile);
-	
+
 	//判断要执行的任务,默认为default
 	var runTask = 'default';
 	// 如果指定了要执行的任务,则执行指定任务
