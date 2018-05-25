@@ -3,16 +3,16 @@
 
 process.bin = process.title = 'Scv';
 
-var fs = require('fs');
-var path = require('path');
-var program = require('commander');
-var sutil = require('../lib/sutil');
-var commTemplate = require('../lib/scv-template');
-var commInit = require('../lib/scv-init');
-var commHint = require('../lib/scv-hint');
-var commCompress = require('../lib/scv-compress');
-var commRelease = require('../lib/scv-release');
-var cliscv =require('../lib/index');
+const fs = require('fs');
+const path = require('path');
+const program = require('commander');
+const sutil = require('../lib/sutil');
+const commTemplate = require('../lib/scv-template');
+const commInit = require('../lib/scv-init');
+const commHint = require('../lib/scv-hint');
+const commCompress = require('../lib/scv-compress');
+const commRelease = require('../lib/scv-release');
+const cliscv =require('../lib/index');
 
 // console.log(process);
 //scv全局目录
@@ -56,11 +56,11 @@ program.command('hint')
   .option('-w --watch','开启实时监控校验')
   .action(commHint);
 
-//SCV自定义服务-compress 压缩应该有指向目标目录(tmp)
+//SCV自定义服务-compress 压缩应该有指向目标目录
 program.command('compress')
   .alias('H')
   .description('Scv前端工程自动化-文件压缩命令,压缩后的文件所在目录由工程配置文件中的tempSpace项指定')
-  .option('-o --otype [type name]','指定压缩配置项中某类型的监控文件(css|js),不设置则为全部')
+  .option('-o --otype [type name]','指定压缩配置项中某类型的监控文件(css|js|image),不设置则为全部')
   .option('-w --watch','开启实时监控压缩')
   .action(commCompress);
 
@@ -95,7 +95,7 @@ if (program.scvfile) {
 		sutil.log('请输入任务文件路径');
 		return;
 	}
-	var scvfile = path.resolve(program.scvfile);
+	let scvfile = path.resolve(program.scvfile);
 	if (!fs.existsSync(scvfile)) {
 		sutil.log('任务文件不存在:'+scvfile);
 		return;
@@ -104,7 +104,7 @@ if (program.scvfile) {
 	require(scvfile);
 
 	//判断要执行的任务,默认为default
-	var runTask = 'default';
+	let runTask = 'default';
 	// 如果指定了要执行的任务,则执行指定任务
 	if (program.task && program.task!==true) {
 		runTask = program.task;
@@ -112,7 +112,7 @@ if (program.scvfile) {
 	// 执行默认或者指定任务
 	process.nextTick(function(){
 		// 必须用本地的,不然任务导入的是全局的scv任务列表里去了, 全局和本地不共享任务列表
-		var scv = require(process.env.localPath);
+		let scv = require(process.env.localPath);
 		if (!scv.task.hasTask(runTask)) {
 			sutil.log('没有定义入口任务:'+runTask);
 			return;

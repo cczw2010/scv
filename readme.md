@@ -22,7 +22,11 @@
 
 ##版本历史
 
->**v2.2.0* alpha
+>**v2.2.1 alpha**
+
+>>2年多了今天看到了代码，忍不住看了看，然后又忍不住更新了compress命令增加image压缩处理支持
+
+>**v2.2.0**
 
 >>开放scv compress命令
 
@@ -174,13 +178,12 @@
  		* @version  应用版本,每次release生成的版本名称也是依据此处，请使用三段
 		* ******监控目录部分
  		* @workSpace  工程源码目录的相对路径,用户在这里开发,文件中引用其他目录中的资源文件时请使用`[相对路径]`,
- 		* @tempSpace  scv缓存目录的相对路径
  		* @releaseSpace  发布目录的相对路径,工程发布后会在这里生成一个版本用于上线
 		* ******监控目录配置部分
  		* @watchs   [watchItem,watchItem,...]
 		*    这是工程对所有资源文件的操作配置,数组中的每个元素代表一个监控对象配置对象(目录),每个watchItem监控对象最终都会进行拷贝工作到发布目录,具体结构如下:
 		*    {
- 		*		// 监控对象的类型,目前系统支持:js|css|html|other几种内置默认类型.出other外每种类型都有自己的actions,other没有对应的action,只会平移复制.
+ 		*		// 监控对象的类型,目前系统支持:js|css|html|image|other几种内置默认类型.除了other外每种类型都有自己的actions,other没有对应的action,只会平移复制.
 		*		type:'js',
 		*		// 监控目录数组,相对于工作目录(workspace)
 		*		paths:['assets/js'],
@@ -201,6 +204,26 @@
 		*			*	[js]	使用的是uglifyjs,当为true时 使用的是默认的配置,个性化配置可参考uglifyjs(参数fromString程序中恒为true)
 		*			*	[css]	使用的是clean-css插件,
 		*			*	[html]	使用html-minifier插件,默认{collapseWhitespace: true,minifyJS:true,minifyCSS:true,relateurl:true,removeComments: true}
+		*			*   [image] 使用imagemin-jpeg-recompress压缩jpg,imagemin-optipng压缩png,其它使用imagemin配置，内部默认调好了配置，也可以自己设置，方式略有不同，def为imagemin的配置，如果设置了jpg,png则默认配置失效，默认如下：
+						{
+							def:{
+								interlaced:true,//隔行扫描gif进行渲染
+								multipass:true,	//多次优化svg直到完全优化
+								svgoPlugins: [{removeViewBox: false}],//不要移除svg的viewbox属性
+							},
+							jpg:{
+								accurate: true,//高精度模式
+						        quality: "high",//图像质量:low, medium, high and veryhigh;
+						        method: "smallfry",//网格优化:mpe, ssim, ms-ssim and smallfry;
+						        min: 80,//最低质量
+						        loops: 0,//循环尝试次数, 默认为6;
+						        progressive: false,//基线优化
+						        subsample: "default"//子采样:default, disable;
+							},
+							png:{
+								optimizationLevel: 4
+							},
+						}
 		*			*/
 		*			compress:true|false|{options},
 		*
@@ -217,9 +240,7 @@
 		*		},
 		*		// 是否按照以上规则递归处理子目录,默认false
 		*		depth:false,
-		*		// 发布时系统将自动将资源文件根据设置的前缀信息更换为线上路径,这需要用户在书写源码的时候必须使用相对路径.如果不需要则设置为false(默认)
-		*		domain:[false]
-		 *    }
+		*    }
  		*
  		* ******测试部分暂未实现，预留
  		* @main  入口html页面,测试需要知道入口。
@@ -235,7 +256,6 @@
 		// port:8001,
 		// *目录配置
 		workSpace:'workspace',
-		tmpSpace:'tmp',
 		releaseSpace:'release',
 		// *资源文件配置
 		watchs:[{
@@ -248,7 +268,6 @@
 					hint:{unused:true}
 				},
 				depth:false,
-				domain:''
 			},{
 				type:'css',
 				path:['assets/css'],
@@ -259,15 +278,14 @@
 					hint:true
 				},
 				depth:true,
-				domain:''
 			},{
 				type:'other',
 				path:['assets/image'],
 				exts:['png','jpg','gif'],
 				actions:{
+					compress:true
 				},
 				depth:true,
-				domain:''
 			},{
 				type:'html',
 				path:['html'],
@@ -278,7 +296,6 @@
 					hint:true
 				},
 				depth:true,
-				domain:''
 			}
 		]
 	};
