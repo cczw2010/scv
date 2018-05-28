@@ -1,18 +1,14 @@
 {
   "name": "scv",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "SCV前端工程自动化工具，工作流",
   "homepage": "https://github.com/cczw2010/scv",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cczw2010/scv"
+    "url": "git+https://github.com/cczw2010/scv.git"
   },
-  "author": {
-    "name": "awen",
-    "email": "71752352@qq.com",
-    "url": "http://www.cnblogs.com/cczw/"
-  },
+  "author": "awen <71752352@qq.com> (http://www.cnblogs.com/cczw/)",
   "tags": [
     "scv",
     "fis",
@@ -40,17 +36,18 @@
     "node": ">=0.9"
   },
   "dependencies": {
+    "anymatch": "^2.0.0",
     "autoprefixer": "^6.3.3",
     "chalk": "^1.1.3",
     "clean-css": "^3.4.10",
     "commander": "^2.9.0",
-    "crypto": "0.0.3",
     "css": "^2.2.1",
     "deprecated": "0.0.1",
     "fancy-log": "^1.3.2",
     "gulp-imagemin": "^4.1.0",
     "gulp-watch": "^4.3.5",
     "html-minifier": "^1.2.0",
+    "imagemin": "^5.3.1",
     "imagemin-jpeg-recompress": "^5.1.0",
     "imagemin-optipng": "^5.2.1",
     "jshint": "^2.9.1",
@@ -63,5 +60,8 @@
   },
   "devDependencies": {},
   "scripts": {},
-  "private": false
+  "private": false,
+  "directories": {
+    "lib": "lib"
+  }
 }
