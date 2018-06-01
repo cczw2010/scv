@@ -22,6 +22,10 @@
 
 ##版本历史
 
+>**v2.2.5**
+
+>>修改release命令，生成版本化资源文件；增加-v命令参数 指定生成的目录，默认release工作根目录
+
 >**v2.2.4**
 
 >>完善watch，compress -w命令同时支持concat，但是默认不支持监控直接删除目录，操作时请注意
@@ -142,11 +146,8 @@
 	#发布工程,自动生成资源文件版本，如果版本存在会询问是否覆盖，并记录每次发布版本的一些信息。便于查询
 	scv release
 
-	#当前发布版本记录
-	scv release -l|--list
-
-	#某发布版本的资源文件版本日志,不输入版本号则默认当前工程版本
-	scv release -i|--info 1.0.0
+	#查看发布版本日志
+	scv release -i|--info
 
 ##用法二中默认模板目录
 
@@ -164,7 +165,7 @@
 
 >**workspace**是默认模板的工作区,用户在此开发，开发区内部所有文件修改保存时都会自动同步到*tmp暂存区*对应目录下的同名目录。*文件的编码格式统一为utf-8** ,文件中引用资源文件时务必请使用`[相对路径]`, 否则合并或者发布操作时可能会出现问题.
 
->**release**版本发布区,发布一次这里生成一个版本文件夹，自动维护资源文件版本，版本号以config.js中为准.
+>**release**版本发布区,自动维护资源文件版本.
 
 
 ###用法二config配置
@@ -251,53 +252,49 @@
 			name:'示例工程',
 			ename:'scv-demo',
 			description:'scv工程流模板工程',
-			version:'1.0.0',
-			// *测试参数
-		// main:'html/index.html',
-		// port:8001,
-		// *目录配置
-		workSpace:'workspace',
-		releaseSpace:'release',
-		// *资源文件配置
-		watchs:[{
-				type:'js',
-				path:['assets/js'],
-				exts:['js'],
-				actions:{
-					concat:'all.js',
-					compress:{mangle:true},
-					hint:{unused:true}
-				},
-				depth:false,
-			},{
-				type:'css',
-				path:['assets/css'],
-				exts:['css'],
-				actions:{
-					concat:false,
-					compress:true,
-					hint:true
-				},
-				depth:true,
-			},{
-				type:'other',
-				path:['assets/image'],
-				exts:['png','jpg','gif'],
-				actions:{
-					compress:true
-				},
-				depth:true,
-			},{
-				type:'html',
-				path:['html'],
-				exts:['html','tpl'],
-				actions:{
-					concat:false,
-					compress:false,
-					hint:true
-				},
-				depth:true,
-			}
-		]
-	};
+			// *目录配置
+			workSpace:'workspace',
+			releaseSpace:'release',
+			// *资源文件配置
+			watchs:[{
+					type:'js',
+					path:['assets/js'],
+					exts:['js'],
+					actions:{
+						concat:'all.js',
+						compress:{mangle:true},
+						hint:{unused:true}
+					},
+					depth:false,
+				},{
+					type:'css',
+					path:['assets/css'],
+					exts:['css'],
+					actions:{
+						concat:false,
+						compress:true,
+						hint:true
+					},
+					depth:true,
+				},{
+					type:'other',
+					path:['assets/image'],
+					exts:['png','jpg','gif'],
+					actions:{
+						compress:true
+					},
+					depth:true,
+				},{
+					type:'html',
+					path:['html'],
+					exts:['html','tpl'],
+					actions:{
+						concat:false,
+						compress:false,
+						hint:true
+					},
+					depth:true,
+				}
+			]
+		};
 

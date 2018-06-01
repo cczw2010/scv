@@ -68,8 +68,8 @@ program.command('compress')
 program.command('release')
   .alias('R')
   .description('Scv前端工程自动化-发布相关命令')
-  .option('-l --list','显示已经发布的版本列表')
-  .option('-i --info [release version]','显示已发布版本的资源文件版本日志,默认为当前版本')
+  .option('-v --version <version name>','指定发布的版本子目录')
+  .option('-i --info','显示已发布版本日志')
   .action(commRelease);
 //SCV自定义服务-template
 program.command('template')

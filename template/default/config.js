@@ -3,7 +3,6 @@ module.exports = {
 		name:'示例工程',
 		ename:'scv-demo',
 		description:'scv前端工程自动化demo',
-		version:'1.0.0',
 		// *测试参数
 		// main:'html/index.html',
 		// port:8001,
